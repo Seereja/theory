@@ -1,0 +1,142 @@
+//        while (true) {
+//            String roll = input.nextLine();
+//            if (roll.equals("1")) {
+//                if (monster.gethP() <= 0) {
+//                    System.out.println(monster.getName() + " умер");
+//                    break;
+//                } else {
+//                    System.out.println("Атака " + hero.getName());
+//                    int resultHpMonster = hero.toDamage(monster);
+//                    monster.sethP(resultHpMonster);
+//                    System.out.println(monster.getName() + " " + "HP " + resultHpMonster);
+//                }
+//                if (hero.gethP() <= 0) {
+//                    System.out.println(hero.getName() + " умер");
+//                } else {
+//                    System.out.println("Атака " + monster.getName());
+//                    int resultHPHero = monster.toDamage(hero);
+//                    hero.sethP(resultHPHero);
+//                    System.out.println(hero.getName() + " " + "HP " + resultHPHero);
+//                }
+//            }
+//            if (roll.equals("2")) {
+//                if (hero.getMaxCountOfLives() <= 0) {
+//                    System.out.println("вы не можете восстановить здоровье");
+//                    break;
+//                } else {
+//                    hero.sethP(hero.toHealthRecoveryOfHero(hero.gethP(), hero.getCountOfLives()));
+//                }
+//            }
+//
+//        }
+
+//            return result = (result > getMaxHp()) ? result = getMaxHp() : result;
+
+
+
+//    public int toHealthRecoveryOfHero(int hp, int countOfLives) {
+//        int result;
+//        int remainderOfLives = getMaxCountOfLives() - countOfLives;
+//        setMaxCountOfLives(remainderOfLives);
+//        System.out.println("У вас осталось возможности отхилиться " + remainderOfLives);
+//        if (remainderOfLives < 0) {
+//            System.out.println("Вы не можете отхилиться");
+//        } else {
+//            int toHealthRecoveryOne = (getMaxHp() * 30) / 100;
+//            System.out.println(" увеличивает свое здоровье на 30%");
+//            result = hp + toHealthRecoveryOne;
+//
+//            if (result > getMaxHp()) {
+//                result = getMaxHp();
+//                System.out.println(" здоровье увеличино до " + result);
+//                return result;
+//            } else {
+//                System.out.println(" здоровье увеличино до " + result);
+//                return result;
+//            }
+//
+//
+//        }
+//        System.out.println("Осталось хилки " + remainderOfLives);
+//        return getCountOfLives();
+//    }
+
+//    public int toDamage(GameCharacter character) {
+//        int attackRoll = 1 + (int) (Math.random() * 6);
+//        if (attackRoll >= 5) {
+//            System.out.println("нанес урона " + attackRoll);
+//            return (character.hP -= (attackRoll - character.defend) + 1);
+//        } else {
+//            System.out.println("промахнулся");
+//            return character.gethP();
+//        }
+//    }
+
+//        for (int i = 0; i < diceRolls; i++) {
+//            int square = 1 + (int) (Math.random() * 6);
+
+public int attack(Creature target) {
+        int modifier = this.attack - target.defense + 1;
+        int diceRolls = Math.max(modifier, 1);
+        int diceCount = 6;
+        int successCount = 0;
+
+        Random random = new Random();
+        for (int i = 0; i < diceRolls; i++) {
+            if (random.nextInt(diceCount) >= 4) {
+                successCount++;
+            }
+        }
+
+        if (successCount > 0) {
+            int damage = random.nextInt(this.damageMax - this.damageMin + 1) + this.damageMin;
+            target.health -= damage;
+            return damage;
+        }
+        return 0;
+    }
+
+
+public int toDamage(GameCharacter character) {
+        //  - Рассчитываем Модификатор атаки.
+        //  Он равен разности Атаки атакующего и Защиты защищающегося плюс 1
+        int attackModifier = this.attack - character.getDefend() + 1;
+//        int diceRolls = Math.max(attackModifier, 1);
+
+
+        int attackSuccess = rollAttack(attackModifier);
+        int damage = calculateDamage(character, attackSuccess);
+        printAttackResult(attackSuccess, damage);
+        return applyDamage(character, damage);
+    }
+
+    private int rollAttack(int attackModifier) {
+        int count = 1 + (int) (Math.random() * 6);
+        int successCount = 0;
+        //  - Успех определяется броском N кубиков с цифрами от 1 до 6,
+        //  где N - это Модификатор атаки. Всегда бросается хотя бы один кубик.
+        for (int i = 0; i < attackModifier; i++) {
+            //    - Удар считается успешным,
+            //    если хотя бы на одном из кубиков выпадает 5 или 6
+            if (count >= 4) {
+                successCount++;
+            }
+        }
+        return successCount;
+    }
+
+    private int calculateDamage(GameCharacter character, int successCount) {
+//    - Удар считается успешным, если хотя бы на одном из кубиков выпадает 5 или 6
+        //  - Если удар успешен, то берется произвольное значение
+        //  из параметра Урон атакующего и вычитается из Здоровья защищающегося.
+        return successCount >= 5 ? (character.gethP() - this.damage) : 0;
+    }
+
+    private void printAttackResult(int attackRoll, int damage) {
+        System.out.println(damage > 0 ? "нанес урона " + attackRoll : "промахнулся");
+    }
+
+    private int applyDamage(GameCharacter character, int damage) {
+        character.hP -= damage;
+        return character.gethP();
+    }

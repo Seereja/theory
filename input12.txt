@@ -1,0 +1,1 @@
+Path path = Paths.get("input.txt");
