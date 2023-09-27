@@ -140,3 +140,18 @@ public int toDamage(GameCharacter character) {
         character.hP -= damage;
         return character.gethP();
     }
+
+     public void heal() {
+            int healCount = 0;
+            for (int i = 0; i < 4; i++) { // ограничение к 4 разам
+                int maxHealth = getMaxHealth();
+                int healedHealth = (int) Math.ceil(maxHealth * 0.3);
+                healedHealth = Math.min(healedHealth, maxHealth - this.health);
+                if(healedHealth<=0) {
+                    break;
+                }
+                healCount++;
+                this.health += healedHealth;
+            }
+            System.out.println("Лечение "+healCount+" раз");
+        }

@@ -1,32 +1,23 @@
 package testTask;
 
-public class Hero extends GameCharacter implements toHealthRecovery {
+public class Hero extends GameCharacter implements HealthRecovery {
 
-    int hp;
-    int countOfLives;
-    int maxCountOfLives;
+    int hP;
 
-    public Hero(String name, int attack, int defend, int maxHp, int damageMin, int damageMax, int maxCountOfLives) {
+    int maxCountOfLives = 4;
+
+    public Hero(String name, int attack, int defend, int maxHp, int damageMin, int damageMax) {
         super(name, attack, defend, maxHp, damageMin, damageMax);
-        this.hp = maxHp;
-        this.maxCountOfLives = maxCountOfLives;
-        this.countOfLives = 1;
+//        this.hP = maxHp;
+
     }
 
     public int getHp() {
-        return hp;
+        return hP;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getCountOfLives() {
-        return countOfLives;
-    }
-
-    public void setCountOfLives(int countOfLives) {
-        this.countOfLives = countOfLives;
+    public void sethP(int hP) {
+        this.hP = hP;
     }
 
     public int getMaxCountOfLives() {
@@ -37,25 +28,22 @@ public class Hero extends GameCharacter implements toHealthRecovery {
         this.maxCountOfLives = maxCountOfLives;
     }
 
-    @Override
-    public int toHealthRecoveryOfHero(int currentHp, int consumedHealthPotions) {
-        int maxCountOfLives = getMaxCountOfLives();
-        int remainingHealthPotions = maxCountOfLives - consumedHealthPotions;
-        setMaxCountOfLives(remainingHealthPotions);
-        System.out.println("У вас осталось возможности отхилиться " + remainingHealthPotions);
-
-        if (remainingHealthPotions < 0) {
+    public int healthRecovery(int currentHp) {
+        int countOfLives = getMaxCountOfLives();
+        int consumedHealthPotion = 1;
+        int remainingHealthPotions;
+        if (countOfLives > 0) {
+            remainingHealthPotions = countOfLives - consumedHealthPotion;
+            setMaxCountOfLives(remainingHealthPotions);
+            int healthRecovered = (int) (getMaxHp() * 0.3);
+            int newHp = Math.min(currentHp + healthRecovered, getMaxHp());
+            System.out.println("Здоровье увеличено до " + newHp);
+            System.out.println("У вас осталось возможности отхилиться " + remainingHealthPotions);
+            return newHp;
+        } else {
             System.out.println("Вы не можете отхилиться");
             return currentHp;
         }
-
-        int healthRecovered = (getMaxHp() * 30) / 100;
-        int newHp = Math.min(currentHp + healthRecovered, getMaxHp());
-
-        System.out.println("Увеличивает свое здоровье на 30%");
-        System.out.println("Здоровье увеличено до " + newHp);
-
-        return newHp;
     }
 
 
