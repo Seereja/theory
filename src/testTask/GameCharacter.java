@@ -49,9 +49,9 @@ public class GameCharacter {
         return defend;
     }
 
-    public boolean isDead() {
-        return this.hP <= 0;
-    }
+//    public boolean isDead() {
+//        return this.hP <= 0;
+//    }
 
     public int toDamage(GameCharacter character) {
         int modifierAttack = this.attack - character.getDefend() + 1;

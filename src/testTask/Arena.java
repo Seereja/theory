@@ -22,18 +22,18 @@ public class Arena {
                 10);
 
 
-        while (!hero.isDead() && !monster.isDead()) {
+        while (hero.gethP() > 0 && monster.gethP() > 0) {
             String roll = input.nextLine();
             switch (roll) {
                 case "1" -> {
-                    if (!hero.isDead()) {
+                    if (hero.gethP() > 0) {
                         System.out.println("Атака " + hero.getName());
                         System.out.println(monster.getName() + " " + "HP " + hero.toDamage(monster));
                     } else {
                         System.out.println(monster.getName() + " убил " + hero.getName());
                     }
 
-                    if (!monster.isDead()) {
+                    if (monster.gethP() > 0) {
                         System.out.println("Атака " + monster.getName());
                         System.out.println(hero.getName() + " " + "HP " + monster.toDamage(hero));
                     } else {
@@ -41,7 +41,7 @@ public class Arena {
                     }
                 }
                 case "2" -> {
-                    int newHp = hero.healthRecovery(hero.getHp());
+                    int newHp = hero.healthRecovery(hero.gethP());
                     System.out.println("ваше здоровье равно" + newHp);
                     hero.sethP(newHp);
                 }
