@@ -13,7 +13,7 @@ public class Arena {
                 50,
                 5,
                 10);
-        GameCharacter monster = new Moster(
+        Monster monster = new Monster(
                 "Monster",
                 10,
                 5,
@@ -45,11 +45,14 @@ public class Arena {
                     System.out.println("ваше здоровье равно" + newHp);
                     hero.sethP(newHp);
                 }
+                default -> System.out.println("Неправильный ввод. Повторите попытку.");
 
             }
         }
     }
 }
+
+
 
 
 
