@@ -9,7 +9,7 @@ public class Arena {
             10,
             4,
             50,
-            5,
+            1,
             10);
     private static Monster monster = new Monster(
             "Monster",
@@ -24,10 +24,10 @@ public class Arena {
             String roll = input.nextLine();
             switch (roll) {
                 case "1" -> {
-                    battle(monster, hero);
+                    GameSoft.battle(monster, hero);
                 }
                 case "2" -> {
-                    health(hero);
+                    GameSoft.health(hero);
                 }
                 default -> System.out.println("Неправильный ввод. Повторите попытку.");
 
@@ -35,27 +35,6 @@ public class Arena {
         }
     }
 
-    public static void battle(Monster monster, Hero hero) {
-        if (!hero.isDead()) {
-            System.out.println("Ход " + hero.getName());
-            System.out.println(monster.getName() + " " + "HP " + hero.toDamage(monster));
-        } else {
-            System.out.println(monster.getName() + " убил " + hero.getName());
-        }
-
-        if (!monster.isDead()) {
-            System.out.println("Ход " + monster.getName());
-            System.out.println(hero.getName() + " " + "HP " + monster.toDamage(hero));
-        } else {
-            System.out.println(hero.getName() + " убил " + monster.getName());
-        }
-    }
-
-    public static void health(Hero hero) {
-        int newHp = hero.healthRecovery(hero.gethP());
-        System.out.println("ваше здоровье равно " + newHp);
-        hero.sethP(newHp);
-    }
 
 }
 
