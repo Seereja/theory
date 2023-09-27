@@ -24,10 +24,10 @@ public class Arena {
             String roll = input.nextLine();
             switch (roll) {
                 case "1" -> {
-                    GameSoft.battle(monster, hero);
+                    GameUtils.battle(monster, hero);
                 }
                 case "2" -> {
-                    GameSoft.health(hero);
+                    GameUtils.health(hero);
                 }
                 default -> System.out.println("Неправильный ввод. Повторите попытку.");
 
