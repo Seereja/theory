@@ -22,7 +22,7 @@ public class Arena {
                 10);
 
 
-        while (true) {
+        while (!hero.isDead() && !monster.isDead()) {
             String roll = input.nextLine();
             switch (roll) {
                 case "1" -> {
@@ -38,8 +38,6 @@ public class Arena {
                         System.out.println(hero.getName() + " " + "HP " + monster.toDamage(hero));
                     } else {
                         System.out.println(hero.getName() + " убил " + monster.getName());
-                        {
-                        }
                     }
                 }
                 case "2" -> {
